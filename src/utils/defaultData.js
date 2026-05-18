@@ -162,7 +162,7 @@ export const DEFAULT_EVENTS = [
     }
   },
   {
-    id: 'pitch-6',
+    id: 'pitch-6-2',
     name: 'Pitch 6 (Card Game)',
     description: 'Classic Pitch tournament of cards. High strategies only.',
     pointsAvailable: 6,

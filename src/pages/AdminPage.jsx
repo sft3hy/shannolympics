@@ -19,6 +19,7 @@ const AdminPage = () => {
     deleteEvent,
     resetToDefault,
     resetScoresToZero,
+    updateEventDetails,
     importState
   } = useContext(AppContext);
 
