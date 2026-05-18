@@ -394,3 +394,29 @@
     align-self: flex-start;
   }
 }
+
+/* Double reset button container styling */
+.reset-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+  text-align: left;
+}
+
+.reset-card-col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.reset-card-col p {
+  flex-grow: 1;
+}
+
+@media (max-width: 576px) {
+  .reset-actions-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}

@@ -162,13 +162,13 @@ export const DEFAULT_EVENTS = [
     }
   },
   {
-    id: 'cornhole',
-    name: 'Cornhole',
-    description: 'Traditional beachside cornhole tournament. Toss for glory!',
-    pointsAvailable: 8,
+    id: 'pitch-6',
+    name: 'Pitch 6 (Card Game)',
+    description: 'Classic Pitch tournament of cards. High strategies only.',
+    pointsAvailable: 6,
     status: 'upcoming',
     date: '2026-08-07',
-    time: '04:00 PM',
+    time: '08:00 PM',
     scores: {
       shannon: 0,
       wick: 0,
@@ -177,7 +177,7 @@ export const DEFAULT_EVENTS = [
       halley: 0,
       peter: 0
     }
-  }
+  },
 ];
 
 export const DEFAULT_ACTIVITY = [

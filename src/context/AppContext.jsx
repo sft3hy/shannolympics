@@ -251,6 +251,49 @@ export const AppProvider = ({ children }) => {
     setActivity([initEntry]);
   };
 
+  // Reset all current event scores to zero and set status to upcoming
+  const resetScoresToZero = () => {
+    const updatedEvents = events.map(evt => {
+      const resetScores = {};
+      Object.keys(evt.scores).forEach(playerId => {
+        resetScores[playerId] = 0;
+      });
+      return {
+        ...evt,
+        status: 'upcoming',
+        scores: resetScores
+      };
+    });
+
+    setEvents(updatedEvents);
+    
+    // Clear and push reset activity entry
+    const resetEntry = {
+      id: `act-${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      message: 'All scores reset back to 0. Tournaments set to upcoming.'
+    };
+    const updatedActivity = [resetEntry];
+    setActivity(updatedActivity);
+
+    // Save locally
+    localStorage.setItem('shannolympics_events', JSON.stringify(updatedEvents));
+    localStorage.setItem('shannolympics_activity', JSON.stringify(updatedActivity));
+
+    // Attempt push to cloud if connected, otherwise fallback
+    const supabase = initSupabase();
+    if (supabase && isCloudConnected) {
+      supabase.from('shannolympics_state').upsert({
+        id: 1,
+        events: updatedEvents,
+        activity: updatedActivity,
+        updated_at: new Date().toISOString()
+      }).then(({ error }) => {
+        if (error) console.error('Cloud scores reset failed:', error);
+      });
+    }
+  };
+
   // Import full state (JSON string)
   const importState = (jsonString) => {
     try {
@@ -424,6 +467,7 @@ export const AppProvider = ({ children }) => {
       addEvent,
       deleteEvent,
       resetToDefault,
+      resetScoresToZero,
       importState,
       getParticipantPoints,
       getParticipantMedals

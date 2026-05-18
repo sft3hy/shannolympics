@@ -18,6 +18,7 @@ const AdminPage = () => {
     addEvent,
     deleteEvent,
     resetToDefault,
+    resetScoresToZero,
     importState
   } = useContext(AppContext);
 
@@ -52,7 +53,8 @@ const AdminPage = () => {
   const [copySuccess, setCopySuccess] = useState(false);
 
   // Reset confirmation
-  const [resetConfirmCount, setResetConfirmCount] = useState(0);
+  const [resetScoresConfirmCount, setResetScoresConfirmCount] = useState(0);
+  const [resetDefaultConfirmCount, setResetDefaultConfirmCount] = useState(0);
 
   // Handle Authentication
   const handleLogin = (e) => {
@@ -230,15 +232,33 @@ const AdminPage = () => {
     setTimeout(() => setSyncStatus({ type: '', message: '' }), 5000);
   };
 
-  // Reset database safely
-  const handleResetData = () => {
-    if (resetConfirmCount === 0) {
-      setResetConfirmCount(1);
-    } else if (resetConfirmCount === 1) {
+  // Reset standings scores to 0
+  const handleResetScores = () => {
+    if (resetScoresConfirmCount === 0) {
+      setResetScoresConfirmCount(1);
+      setResetDefaultConfirmCount(0); // Cancel other reset button state
+    } else {
+      resetScoresToZero();
+      setResetScoresConfirmCount(0);
+      alert("Standings scores reset back to 0. Tournaments set to upcoming.");
+      if (events.length > 0) {
+        setSelectedEventId(events[0].id);
+        setScores({ ...events[0].scores });
+        setEventStatus(events[0].status);
+      }
+    }
+  };
+
+  // Restore default initial schedule
+  const handleResetDefaultSchedule = () => {
+    if (resetDefaultConfirmCount === 0) {
+      setResetDefaultConfirmCount(1);
+      setResetScoresConfirmCount(0); // Cancel other reset button state
+    } else {
       resetToDefault();
-      setResetConfirmCount(0);
-      alert("Standings reset to initial OBX defaults.");
-      // Recenter drops
+      setResetDefaultConfirmCount(0);
+      alert("Events list and schedule restored back to OBX defaults.");
+      // Recenter drop-down score editor
       if (events.length > 0) {
         setSelectedEventId(events[0].id);
         setScores({ ...events[0].scores });
@@ -528,19 +548,40 @@ const AdminPage = () => {
           <section className="admin-section glass-card border-red" id="admin-danger-util">
             <div className="section-title text-red">
               <RotateCcw size={20} />
-              System Reset
+              System Reset Controls
             </div>
             <p className="danger-desc">
-              Resets score standings and restores initial OBX beach/card game tournaments.
+              Safely reset tournament operations. All modifications synchronize instantly across all devices.
             </p>
-            <button
-              onClick={handleResetData}
-              className={`btn w-full mt-2 ${resetConfirmCount > 0 ? 'btn-danger animate-pulse-subtle' : 'btn-secondary'}`}
-              id="reset-btn"
-            >
-              <RotateCcw size={16} />
-              {resetConfirmCount === 0 ? 'Reset Standings to Defaults' : 'Confirm Reset (Click Again!)'}
-            </button>
+            <div className="reset-actions-grid">
+              <div className="reset-card-col">
+                <h5 className="font-bold text-sm mb-1" style={{ color: 'var(--color-text-dark)' }}>Reset Standings Only</h5>
+                <p className="text-xs text-muted mb-3">Wipes all participant points back to 0 and marks games as upcoming. Keeps any custom events you've created.</p>
+                <button
+                  onClick={handleResetScores}
+                  className={`btn w-full ${resetScoresConfirmCount > 0 ? 'btn-danger animate-pulse-subtle' : 'btn-secondary'}`}
+                  id="reset-scores-btn"
+                  style={{ fontSize: '0.85rem', padding: '0.6rem 1rem' }}
+                >
+                  <RotateCcw size={14} />
+                  {resetScoresConfirmCount === 0 ? 'Clear Scores to 0' : 'Confirm Clear Scores?'}
+                </button>
+              </div>
+
+              <div className="reset-card-col">
+                <h5 className="font-bold text-sm mb-1" style={{ color: 'var(--color-text-dark)' }}>Full Schedule Restore</h5>
+                <p className="text-xs text-muted mb-3">Wipes everything, restoring the default schedule structure from scratch (10 games list).</p>
+                <button
+                  onClick={handleResetDefaultSchedule}
+                  className={`btn w-full ${resetDefaultConfirmCount > 0 ? 'btn-danger animate-pulse-subtle' : 'btn-secondary'}`}
+                  id="reset-schedule-btn"
+                  style={{ fontSize: '0.85rem', padding: '0.6rem 1rem' }}
+                >
+                  <RotateCcw size={14} />
+                  {resetDefaultConfirmCount === 0 ? 'Restore OBX Schedule' : 'Confirm Reset Schedule?'}
+                </button>
+              </div>
+            </div>
           </section>
         </div>
       </div>
