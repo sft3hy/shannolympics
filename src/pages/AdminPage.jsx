@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { Lock, Unlock, Save, PlusCircle, Copy, Check, UploadCloud, RotateCcw, AlertTriangle, LogOut, Info, Database, Wifi, WifiOff, Terminal, HelpCircle, Trash2 } from 'lucide-react';
+import logoImg from '../assets/shannolympics.png';
 import './AdminPage.css';
 
 const AdminPage = () => {
@@ -251,8 +252,8 @@ const AdminPage = () => {
     return (
       <div className="admin-page container">
         <div className="login-wrapper glass-card text-center mt-4">
-          <div className="login-icon">
-            <Lock size={36} className="lock-icon" />
+          <div className="login-logo-wrapper mb-3" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
+            <img src={logoImg} alt="ShannOlympics Logo" className="login-logo animate-float" style={{ width: '100px', height: '100px', objectFit: 'contain' }} />
           </div>
           <h2>Beach Cabana Portal</h2>
           <p className="login-desc">

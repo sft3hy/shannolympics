@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { Award, ChevronDown, ChevronUp, Clock, Flame, ShieldAlert, Sparkles, TrendingUp } from 'lucide-react';
+import logoImg from '../assets/shannolympics.png';
 import './LeaderboardPage.css';
 
 const LeaderboardPage = () => {
@@ -85,7 +86,8 @@ const LeaderboardPage = () => {
   return (
     <div className="leaderboard-page container">
       {/* Title */}
-      <div className="page-header text-center mb-4">
+      <div className="page-header text-center mb-4" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <img src={logoImg} alt="ShannOlympics Logo" className="hero-logo animate-float" style={{ width: '130px', height: '130px', objectFit: 'contain', marginBottom: '1rem', filter: 'drop-shadow(0 10px 15px rgba(15, 23, 42, 0.08))' }} />
         <div className="header-subtitle animate-pulse-subtle">
           <Flame size={16} className="flame-icon" /> Live Beach Standings
         </div>

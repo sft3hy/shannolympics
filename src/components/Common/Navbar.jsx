@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Trophy, Calendar, Settings, Menu, X, Waves, Sun } from 'lucide-react';
+import logoImg from '../../assets/shannolympics.png';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -14,9 +15,8 @@ const Navbar = () => {
       <div className="navbar-container container">
         {/* Brand Logo */}
         <NavLink to="/" className="brand-logo" onClick={closeMenu} id="nav-logo">
-          <div className="logo-icon-wrapper">
-            <Trophy className="logo-trophy" />
-            <Waves className="logo-waves" />
+          <div className="logo-icon-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', boxShadow: 'none' }}>
+            <img src={logoImg} alt="ShannOlympics Logo" className="logo-img" style={{ width: '38px', height: '38px', objectFit: 'contain' }} />
           </div>
           <span className="brand-text">
             Shann<span className="brand-highlight">Olympics</span>

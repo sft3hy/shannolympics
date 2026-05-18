@@ -1,8 +1,18 @@
-# React + Vite
+# ShannOlympics
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight, real-time interactive leaderboard and event schedule application built for a 60th birthday Olympics-style tournament in the Outer Banks, North Carolina.
 
-Currently, two official plugins are available:
+## Features
+- **Live Leaderboard**: Real-time points tracking across participants.
+- **Tournament Events**: Built-in scoring systems for Surfing, Paddleboarding, Pickleball, Bocce Ball, Bike Rides, Egg Toss, and various Card Games.
+- **Admin Cabana**: Secure admin dashboard for creating new events, updating statuses, and modifying points.
+- **Real-Time Sync**: Fully synced across all devices instantly using Supabase Realtime WebSockets.
+- **Offline Capable**: Graceful fallback to `localStorage` if the cloud database is disconnected.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- **Frontend**: React, Vite, Vanilla CSS
+- **Database**: Supabase PostgreSQL (with Row-Level Security & Realtime WebSockets)
+- **Deployment**: GitHub Pages
+
+## Deployment
+This project is configured to automatically deploy to GitHub Pages via the `gh-pages` branch using `npm run deploy`.
