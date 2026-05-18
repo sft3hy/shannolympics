@@ -85,11 +85,12 @@ export const AppProvider = ({ children }) => {
       .on(
         'postgres_changes',
         {
-          event: 'UPDATE', // We only care about upserts/updates to row id=1
+          event: '*', // Listen for all events (INSERT, UPDATE, DELETE)
           schema: 'public',
           table: 'shannolympics_state',
         },
         (payload) => {
+          console.log('Realtime Payload Received:', payload);
           if (payload.new && Array.isArray(payload.new.events) && Array.isArray(payload.new.activity)) {
             // Update React state instantly without refreshing the page
             setEvents(payload.new.events);
