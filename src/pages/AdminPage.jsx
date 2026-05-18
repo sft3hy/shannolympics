@@ -94,7 +94,7 @@ const AdminPage = () => {
     if (deleteConfirmEventId === eventId) {
       deleteEvent(eventId);
       setDeleteConfirmEventId(null);
-      
+
       // Auto select the first remaining event
       const remainingEvents = events.filter(e => e.id !== eventId);
       if (remainingEvents.length > 0) {
@@ -189,7 +189,7 @@ const AdminPage = () => {
     }
     setCloudSyncError('');
     setCloudSyncSuccess(false);
-    
+
     const result = await connectCloud(dbUrl.trim(), dbKey.trim());
     if (result.success) {
       setCloudSyncSuccess(true);
@@ -202,8 +202,6 @@ const AdminPage = () => {
   // Unlink/Disconnect Supabase
   const handleDisconnectCloudClick = () => {
     disconnectCloud();
-    setDbUrl('');
-    setDbKey('');
     setCloudSyncError('');
     setCloudSyncSuccess(false);
   };
@@ -416,10 +414,9 @@ const AdminPage = () => {
                   <button
                     type="button"
                     onClick={() => handleDeleteEventClick(currentEvent.id)}
-                    className={`btn flex items-center justify-center gap-1 ${
-                      deleteConfirmEventId === currentEvent.id ? 'btn-danger animate-pulse-subtle' : 'btn-secondary'
-                    }`}
-                    style={{ 
+                    className={`btn flex items-center justify-center gap-1 ${deleteConfirmEventId === currentEvent.id ? 'btn-danger animate-pulse-subtle' : 'btn-secondary'
+                      }`}
+                    style={{
                       minWidth: deleteConfirmEventId === currentEvent.id ? '160px' : '120px',
                       borderColor: deleteConfirmEventId === currentEvent.id ? 'var(--color-red)' : 'var(--color-text-muted)',
                       color: deleteConfirmEventId === currentEvent.id ? 'white' : 'var(--color-red, #ef4444)',
@@ -524,7 +521,7 @@ const AdminPage = () => {
             </form>
           </section>
 
-           {/* Removed Supabase Cloud Sync and Cross-Device Sync forms as credentials are fully auto-configured via .env */}
+          {/* Removed Supabase Cloud Sync and Cross-Device Sync forms as credentials are fully auto-configured via .env */}
 
           {/* DANGER DESTRUCTION CONTROL */}
           <section className="admin-section glass-card border-red" id="admin-danger-util">
