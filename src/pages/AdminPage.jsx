@@ -618,7 +618,10 @@ alter table shannolympics_state enable row level security;
 -- Create policies for anonymous access to row id=1
 create policy "Allow public read" on shannolympics_state for select using (true);
 create policy "Allow public insert" on shannolympics_state for insert with check (id = 1);
-create policy "Allow public update" on shannolympics_state for update using (id = 1) with check (id = 1);`}
+create policy "Allow public update" on shannolympics_state for update using (id = 1) with check (id = 1);
+
+-- Enable Realtime
+alter publication supabase_realtime add table shannolympics_state;`}
                       </pre>
                       <p className="text-xxs text-muted mt-1" style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)', textAlign: 'left' }}>
                         Paste this into your Supabase SQL Editor and click **Run**.

@@ -75,6 +75,39 @@ export const AppProvider = ({ children }) => {
     }
   }, [fetchCloudState, supabaseConfig]);
 
+  // Real-Time Auto Sync (WebSockets)
+  useEffect(() => {
+    const supabase = initSupabase();
+    if (!supabase) return;
+
+    const channel = supabase
+      .channel('public:shannolympics_state')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE', // We only care about upserts/updates to row id=1
+          schema: 'public',
+          table: 'shannolympics_state',
+        },
+        (payload) => {
+          if (payload.new && Array.isArray(payload.new.events) && Array.isArray(payload.new.activity)) {
+            // Update React state instantly without refreshing the page
+            setEvents(payload.new.events);
+            setActivity(payload.new.activity);
+            
+            // Sync local fallback cache immediately
+            localStorage.setItem('shannolympics_events', JSON.stringify(payload.new.events));
+            localStorage.setItem('shannolympics_activity', JSON.stringify(payload.new.activity));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [supabaseConfig]);
+
   // Main save helper to push state to Supabase + localStorage backup
   const pushState = useCallback(async (updatedEvents, updatedActivity) => {
     // Secondary local backup

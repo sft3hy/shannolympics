@@ -63,7 +63,7 @@ const LeaderboardPage = () => {
   const getPlayerEventPlacement = (eventId, playerId) => {
     const evt = events.find(e => e.id === eventId);
     if (!evt || evt.status === 'upcoming') return { points: '-', rankText: 'Upcoming', rankNum: 99 };
-    
+
     const sorted = participants.map(p => ({
       id: p.id,
       score: Number(evt.scores[p.id]) || 0
@@ -75,7 +75,7 @@ const LeaderboardPage = () => {
     if (playerIndex === 0 && playerScore > 0) return { points: playerScore, rankText: '🥇 1st', rankNum: 1 };
     if (playerIndex === 1 && playerScore > 0) return { points: playerScore, rankText: '🥈 2nd', rankNum: 2 };
     if (playerIndex === 2 && playerScore > 0) return { points: playerScore, rankText: '🥉 3rd', rankNum: 3 };
-    
+
     // Check if score is 0
     if (playerScore === 0) return { points: 0, rankText: 'No score', rankNum: 10 };
 
@@ -91,7 +91,7 @@ const LeaderboardPage = () => {
         </div>
         <h1>OBX Leaderboard</h1>
         <p className="header-desc">
-          Tracking points, medals, and glory across all ShannOlympics beach tournaments & card matches!
+          Tracking points, medals, and glory across all ShannOlympics beach tournaments & card games!
         </p>
       </div>
 
@@ -107,7 +107,7 @@ const LeaderboardPage = () => {
             {podium[0] && (
               <div className="podium-spot spot-second">
                 <div className="podium-avatar">
-                  <div className="avatar-circle silver-border">{podium[0].name.substring(0,2).toUpperCase()}</div>
+                  <div className="avatar-circle silver-border">{podium[0].name.substring(0, 2).toUpperCase()}</div>
                   <Award className="medal-icon silver-medal" size={24} />
                 </div>
                 <div className="podium-name">{podium[0].name}</div>
@@ -122,7 +122,7 @@ const LeaderboardPage = () => {
             {podium[1] && (
               <div className="podium-spot spot-first">
                 <div className="podium-avatar animate-float">
-                  <div className="avatar-circle gold-border">{podium[1].name.substring(0,2).toUpperCase()}</div>
+                  <div className="avatar-circle gold-border">{podium[1].name.substring(0, 2).toUpperCase()}</div>
                   <Award className="medal-icon gold-medal" size={30} />
                 </div>
                 <div className="podium-name font-bold">{podium[1].name}</div>
@@ -137,7 +137,7 @@ const LeaderboardPage = () => {
             {podium[2] && (
               <div className="podium-spot spot-third">
                 <div className="podium-avatar">
-                  <div className="avatar-circle bronze-border">{podium[2].name.substring(0,2).toUpperCase()}</div>
+                  <div className="avatar-circle bronze-border">{podium[2].name.substring(0, 2).toUpperCase()}</div>
                   <Award className="medal-icon bronze-medal" size={24} />
                 </div>
                 <div className="podium-name">{podium[2].name}</div>
@@ -166,8 +166,8 @@ const LeaderboardPage = () => {
               const isExpanded = expandedPlayer === player.id;
 
               return (
-                <div 
-                  key={player.id} 
+                <div
+                  key={player.id}
                   className={`player-rank-item ${isExpanded ? 'expanded' : ''}`}
                   id={`player-row-${player.id}`}
                 >
@@ -176,7 +176,7 @@ const LeaderboardPage = () => {
                     <div className="rank-col">
                       {renderRankBadge(rank)}
                     </div>
-                    
+
                     <div className="avatar-col">
                       <div className="avatar-badge">{player.name.charAt(0)}</div>
                     </div>
@@ -248,7 +248,7 @@ const LeaderboardPage = () => {
             <Clock size={20} />
             Recent Activity
           </div>
-          
+
           <div className="activity-list">
             {activity.length === 0 ? (
               <p className="no-activity">No recent activities recorded yet.</p>
