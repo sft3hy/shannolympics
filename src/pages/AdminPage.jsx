@@ -42,7 +42,7 @@ const AdminPage = () => {
   const [newEventName, setNewEventName] = useState('');
   const [newEventDesc, setNewEventDesc] = useState('');
   const [newEventPoints, setNewEventPoints] = useState(10);
-  const [newEventDate, setNewEventDate] = useState('2026-05-18');
+  const [newEventDate, setNewEventDate] = useState('2026-08-03');
   const [newEventTime, setNewEventTime] = useState('09:00 AM');
   const [eventCreateSuccess, setEventCreateSuccess] = useState(false);
 

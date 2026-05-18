@@ -14,93 +14,8 @@ export const DEFAULT_EVENTS = [
     description: 'Best wave performance and style competition at Outer Banks beaches.',
     pointsAvailable: 10,
     status: 'upcoming', // completed, in_progress, upcoming
-    date: '2026-05-19',
-    time: '09:00 AM',
-    scores: {
-      shannon: 0,
-      wick: 0,
-      sam: 0,
-      brielle: 0,
-      halley: 0,
-      peter: 0
-    }
-  },
-  {
-    id: 'paddleboarding',
-    name: 'Paddleboarding',
-    description: 'Timed sprint paddle board race around the sound buoys.',
-    pointsAvailable: 10,
-    status: 'upcoming',
-    date: '2026-05-20',
-    time: '10:30 AM',
-    scores: {
-      shannon: 0,
-      wick: 0,
-      sam: 0,
-      brielle: 0,
-      halley: 0,
-      peter: 0
-    }
-  },
-  {
-    id: 'bocce',
-    name: 'Bocce Ball',
-    description: 'Beachside Bocce tournament. Closest to the pallino wins!',
-    pointsAvailable: 8,
-    status: 'upcoming',
-    date: '2026-05-21',
-    time: '04:00 PM',
-    scores: {
-      shannon: 0,
-      wick: 0,
-      sam: 0,
-      brielle: 0,
-      halley: 0,
-      peter: 0
-    }
-  },
-  {
-    id: 'pickleball',
-    name: 'Pickleball',
-    description: 'Fast-paced 2v2 tournament at local OBX courts.',
-    pointsAvailable: 12,
-    status: 'upcoming',
-    date: '2026-05-22',
-    time: '02:00 PM',
-    scores: {
-      shannon: 0,
-      wick: 0,
-      sam: 0,
-      brielle: 0,
-      halley: 0,
-      peter: 0
-    }
-  },
-  {
-    id: 'bike-ride',
-    name: 'Bike Ride',
-    description: 'Scenic group bike ride with sprint milestones along the coastal trail.',
-    pointsAvailable: 8,
-    status: 'upcoming',
-    date: '2026-05-23',
-    time: '08:30 AM',
-    scores: {
-      shannon: 0,
-      wick: 0,
-      sam: 0,
-      brielle: 0,
-      halley: 0,
-      peter: 0
-    }
-  },
-  {
-    id: 'egg-toss',
-    name: 'Egg Toss',
-    description: 'Traditional distance-scaling partner egg toss. Do not drop it!',
-    pointsAvailable: 6,
-    status: 'upcoming',
-    date: '2026-05-24',
-    time: '11:00 AM',
+    date: '2026-08-03',
+    time: '10:00 AM',
     scores: {
       shannon: 0,
       wick: 0,
@@ -116,8 +31,25 @@ export const DEFAULT_EVENTS = [
     description: 'Strategic card game match around the kitchen table.',
     pointsAvailable: 6,
     status: 'upcoming',
-    date: '2026-05-18',
+    date: '2026-08-03',
     time: '08:00 PM',
+    scores: {
+      shannon: 0,
+      wick: 0,
+      sam: 0,
+      brielle: 0,
+      halley: 0,
+      peter: 0
+    }
+  },
+  {
+    id: 'paddleboarding',
+    name: 'Paddleboarding',
+    description: 'Timed sprint paddle board race around the sound buoys.',
+    pointsAvailable: 10,
+    status: 'upcoming',
+    date: '2026-08-04',
+    time: '10:30 AM',
     scores: {
       shannon: 0,
       wick: 0,
@@ -133,8 +65,25 @@ export const DEFAULT_EVENTS = [
     description: 'Classic Pitch tournament of cards. High strategies only.',
     pointsAvailable: 6,
     status: 'upcoming',
-    date: '2026-05-19',
-    time: '08:30 PM',
+    date: '2026-08-04',
+    time: '08:00 PM',
+    scores: {
+      shannon: 0,
+      wick: 0,
+      sam: 0,
+      brielle: 0,
+      halley: 0,
+      peter: 0
+    }
+  },
+  {
+    id: 'bocce',
+    name: 'Bocce Ball',
+    description: 'Beachside Bocce tournament. Closest to the pallino wins!',
+    pointsAvailable: 8,
+    status: 'upcoming',
+    date: '2026-08-05',
+    time: '04:00 PM',
     scores: {
       shannon: 0,
       wick: 0,
@@ -150,8 +99,76 @@ export const DEFAULT_EVENTS = [
     description: 'Rummy-style game with five suits. Keeping points low is the goal!',
     pointsAvailable: 6,
     status: 'upcoming',
-    date: '2026-05-20',
-    time: '09:00 PM',
+    date: '2026-08-05',
+    time: '08:00 PM',
+    scores: {
+      shannon: 0,
+      wick: 0,
+      sam: 0,
+      brielle: 0,
+      halley: 0,
+      peter: 0
+    }
+  },
+  {
+    id: 'egg-toss',
+    name: 'Egg Toss',
+    description: 'Traditional distance-scaling partner egg toss. Do not drop it!',
+    pointsAvailable: 6,
+    status: 'upcoming',
+    date: '2026-08-06',
+    time: '11:00 AM',
+    scores: {
+      shannon: 0,
+      wick: 0,
+      sam: 0,
+      brielle: 0,
+      halley: 0,
+      peter: 0
+    }
+  },
+  {
+    id: 'pickleball',
+    name: 'Pickleball',
+    description: 'Fast-paced 2v2 tournament at local OBX courts.',
+    pointsAvailable: 12,
+    status: 'upcoming',
+    date: '2026-08-06',
+    time: '02:00 PM',
+    scores: {
+      shannon: 0,
+      wick: 0,
+      sam: 0,
+      brielle: 0,
+      halley: 0,
+      peter: 0
+    }
+  },
+  {
+    id: 'bike-ride',
+    name: 'Bike Ride',
+    description: 'Scenic group bike ride along the coastal trail.',
+    pointsAvailable: 8,
+    status: 'upcoming',
+    date: '2026-08-07',
+    time: '10:00 AM',
+    scores: {
+      shannon: 0,
+      wick: 0,
+      sam: 0,
+      brielle: 0,
+      halley: 0,
+      peter: 0
+    }
+  },
+  {
+    id: 'cornhole',
+    name: 'Cornhole',
+    description: 'Traditional beachside cornhole tournament. Toss for glory!',
+    pointsAvailable: 8,
+    status: 'upcoming',
+    date: '2026-08-07',
+    time: '04:00 PM',
     scores: {
       shannon: 0,
       wick: 0,
