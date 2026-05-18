@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
-import { Lock, Unlock, Save, PlusCircle, Copy, Check, UploadCloud, RotateCcw, AlertTriangle, LogOut, Info } from 'lucide-react';
+import { Lock, Unlock, Save, PlusCircle, Copy, Check, UploadCloud, RotateCcw, AlertTriangle, LogOut, Info, Database, Wifi, WifiOff, Terminal, HelpCircle } from 'lucide-react';
 import './AdminPage.css';
 
 const AdminPage = () => {
@@ -8,6 +8,11 @@ const AdminPage = () => {
     participants,
     events,
     activity,
+    isCloudConnected,
+    supabaseConfig,
+    isSyncing,
+    connectCloud,
+    disconnectCloud,
     updateEventScores,
     addEvent,
     deleteEvent,
@@ -21,6 +26,21 @@ const AdminPage = () => {
     return sessionStorage.getItem('shannolympics_admin_auth') === 'true';
   });
   const [authError, setAuthError] = useState('');
+
+  // Supabase Sync states
+  const [dbUrl, setDbUrl] = useState(supabaseConfig?.url || '');
+  const [dbKey, setDbKey] = useState(supabaseConfig?.key || '');
+  const [cloudSyncError, setCloudSyncError] = useState('');
+  const [cloudSyncSuccess, setCloudSyncSuccess] = useState(false);
+  const [showSqlSetup, setShowSqlSetup] = useState(false);
+
+  // Sync inputs with config changes
+  React.useEffect(() => {
+    if (supabaseConfig) {
+      setDbUrl(supabaseConfig.url || '');
+      setDbKey(supabaseConfig.key || '');
+    }
+  }, [supabaseConfig]);
 
   // Score editor states
   const [selectedEventId, setSelectedEventId] = useState(events[0]?.id || '');
@@ -150,6 +170,34 @@ const AdminPage = () => {
       .catch(err => {
         console.error("Clipboard fail: ", err);
       });
+  };
+
+  // Connect to Supabase Cloud Sync
+  const handleConnectCloud = async (e) => {
+    e.preventDefault();
+    if (!dbUrl.trim() || !dbKey.trim()) {
+      setCloudSyncError('Please enter both Supabase URL and Anon API key.');
+      return;
+    }
+    setCloudSyncError('');
+    setCloudSyncSuccess(false);
+    
+    const result = await connectCloud(dbUrl.trim(), dbKey.trim());
+    if (result.success) {
+      setCloudSyncSuccess(true);
+      setTimeout(() => setCloudSyncSuccess(false), 3000);
+    } else {
+      setCloudSyncError(result.error || 'Connection failed. Verify your Supabase settings.');
+    }
+  };
+
+  // Unlink/Disconnect Supabase
+  const handleDisconnectCloudClick = () => {
+    disconnectCloud();
+    setDbUrl('');
+    setDbKey('');
+    setCloudSyncError('');
+    setCloudSyncSuccess(false);
   };
 
   // Import full state
@@ -448,6 +496,130 @@ const AdminPage = () => {
                 </div>
               )}
             </form>
+          </section>
+
+          {/* SUPABASE CLOUD DATABASE SYNC CONFIG CARD */}
+          <section className="admin-section glass-card" id="admin-supabase-config">
+            <div className="section-title">
+              <Database size={20} />
+              Real-Time Cloud Sync
+            </div>
+
+            {isCloudConnected ? (
+              <div className="cloud-connected-panel">
+                <div className="cloud-status-badge success mb-3">
+                  <Wifi size={16} />
+                  <span>CONNECTED TO CLOUD</span>
+                </div>
+                <p className="sync-desc mb-3">
+                  Your standings and event scores are backing up and syncing globally in real-time. Changes will sync immediately across all devices!
+                </p>
+                <div className="config-indicator mb-4 text-xs">
+                  <strong>Source:</strong> {supabaseConfig.isEnv ? 'Environment Variables (.env)' : 'Admin Dashboard Config'}
+                </div>
+                <button 
+                  onClick={handleDisconnectCloudClick} 
+                  className="btn btn-secondary w-full"
+                  id="disconnect-cloud-btn"
+                >
+                  <WifiOff size={16} /> Disconnect Sync Database
+                </button>
+              </div>
+            ) : (
+              <div className="cloud-disconnected-panel">
+                <div className="cloud-status-badge warning mb-3">
+                  <WifiOff size={16} />
+                  <span>OFFLINE MODE (LOCAL STORAGE)</span>
+                </div>
+                <p className="sync-desc mb-4">
+                  Standings are currently saved in your browser's local cache. Connect a free Supabase cloud database to automatically sync scores to your phone and computer.
+                </p>
+
+                <form onSubmit={handleConnectCloud}>
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="db-url">Supabase Project URL</label>
+                    <input 
+                      type="url" 
+                      id="db-url"
+                      placeholder="https://your-project.supabase.co" 
+                      className="form-input text-xs" 
+                      value={dbUrl}
+                      onChange={(e) => setDbUrl(e.target.value)}
+                      required
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label className="form-label" htmlFor="db-key">Supabase Anon API Key</label>
+                    <input 
+                      type="password" 
+                      id="db-key"
+                      placeholder="eyJhbGciOi..." 
+                      className="form-input text-xs" 
+                      value={dbKey}
+                      onChange={(e) => setDbKey(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    className="btn btn-primary w-full"
+                    disabled={isSyncing}
+                    id="connect-cloud-btn"
+                  >
+                    {isSyncing ? (
+                      <span className="spinner-loader animate-spin">🔄 Connecting...</span>
+                    ) : (
+                      <span className="flex items-center justify-center gap-1">
+                        <Wifi size={16} /> Link & Sync Cloud
+                      </span>
+                    )}
+                  </button>
+
+                  {cloudSyncError && (
+                    <div className="sync-banner error mt-2">
+                      <AlertTriangle size={16} />
+                      <span>{cloudSyncError}</span>
+                    </div>
+                  )}
+                  {cloudSyncSuccess && (
+                    <div className="sync-banner success mt-2">
+                      <Check size={16} />
+                      <span>Cloud connected and synchronized!</span>
+                    </div>
+                  )}
+                </form>
+
+                {/* Collapsible SQL helper */}
+                <div className="sql-helper-wrapper mt-3">
+                  <button 
+                    type="button"
+                    onClick={() => setShowSqlSetup(!showSqlSetup)}
+                    className="btn btn-text w-full text-xs flex justify-between items-center"
+                    style={{ padding: '0.4rem', justifyContent: 'space-between', display: 'flex', border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--color-text-muted)', fontWeight: '600' }}
+                  >
+                    <span className="flex items-center gap-1"><Terminal size={14} /> View SQL Setup Query</span>
+                    <span>{showSqlSetup ? '▲' : '▼'}</span>
+                  </button>
+                  {showSqlSetup && (
+                    <div className="sql-box mt-2">
+                      <pre className="text-xxs p-2 bg-dark rounded border text-left" style={{ overflowX: 'auto', background: 'rgba(15, 23, 42, 0.9)', color: '#38bdf8', fontSize: '0.7rem', padding: '0.5rem', borderRadius: '6px', whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+{`create table shannolympics_state (
+  id integer primary key,
+  events jsonb not null,
+  activity jsonb not null,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+);`}
+                      </pre>
+                      <p className="text-xxs text-muted mt-1" style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)', textAlign: 'left' }}>
+                        Paste this into your Supabase SQL Editor and click **Run**.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </section>
 
           {/* CLOUD DATA BACKUP SYNC */}

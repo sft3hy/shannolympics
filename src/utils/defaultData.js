@@ -13,16 +13,16 @@ export const DEFAULT_EVENTS = [
     name: 'Surfing',
     description: 'Best wave performance and style competition at Outer Banks beaches.',
     pointsAvailable: 10,
-    status: 'completed', // completed, in_progress, upcoming
+    status: 'upcoming', // completed, in_progress, upcoming
     date: '2026-05-19',
     time: '09:00 AM',
     scores: {
-      shannon: 6,
-      wick: 8,
-      sam: 10,
-      brielle: 4,
-      halley: 2,
-      peter: 1
+      shannon: 0,
+      wick: 0,
+      sam: 0,
+      brielle: 0,
+      halley: 0,
+      peter: 0
     }
   },
   {
@@ -30,16 +30,16 @@ export const DEFAULT_EVENTS = [
     name: 'Paddleboarding',
     description: 'Timed sprint paddle board race around the sound buoys.',
     pointsAvailable: 10,
-    status: 'in_progress',
+    status: 'upcoming',
     date: '2026-05-20',
     time: '10:30 AM',
     scores: {
-      shannon: 5,
-      wick: 3,
-      sam: 8,
-      brielle: 8,
-      halley: 4,
-      peter: 2
+      shannon: 0,
+      wick: 0,
+      sam: 0,
+      brielle: 0,
+      halley: 0,
+      peter: 0
     }
   },
   {
@@ -165,13 +165,8 @@ export const DEFAULT_EVENTS = [
 
 export const DEFAULT_ACTIVITY = [
   {
-    id: 'act-1',
-    timestamp: '2026-05-18T20:15:00.000Z',
-    message: 'Surfing event scored! Sam took 1st place, Wick 2nd, and Shannon 3rd.'
-  },
-  {
-    id: 'act-2',
-    timestamp: '2026-05-18T21:02:00.000Z',
-    message: 'Paddleboarding scores updated. Brielle and Sam are leading the race!'
+    id: 'act-init',
+    timestamp: new Date().toISOString(),
+    message: 'ShannOlympics initialized! Let the games begin!'
   }
 ];
