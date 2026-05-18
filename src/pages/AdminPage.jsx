@@ -39,6 +39,20 @@ const AdminPage = () => {
   const [scores, setScores] = useState({});
   const [scoreSaveSuccess, setScoreSaveSuccess] = useState(false);
 
+  // Reschedule state
+  const [editEventDate, setEditEventDate] = useState('');
+  const [editEventTime, setEditEventTime] = useState('');
+  const [rescheduleSuccess, setRescheduleSuccess] = useState(false);
+
+  // Update edit fields when event changes
+  React.useEffect(() => {
+    const evt = events.find(e => e.id === selectedEventId);
+    if (evt) {
+      setEditEventDate(evt.date);
+      setEditEventTime(evt.time);
+    }
+  }, [selectedEventId, events]);
+
   // Event creator states
   const [newEventName, setNewEventName] = useState('');
   const [newEventDesc, setNewEventDesc] = useState('');
@@ -89,6 +103,9 @@ const AdminPage = () => {
       setEventStatus(evt.status);
       setScores({ ...evt.scores });
       setScoreSaveSuccess(false);
+      setEditEventDate(evt.date);
+      setEditEventTime(evt.time);
+      setRescheduleSuccess(false);
     }
   };
 
@@ -129,6 +146,17 @@ const AdminPage = () => {
       [playerId]: numeric
     }));
     setScoreSaveSuccess(false);
+  };
+
+  // Save Event Date/Time
+  const handleRescheduleEvent = (e) => {
+    e.preventDefault();
+    updateEventDetails(selectedEventId, {
+      date: editEventDate,
+      time: editEventTime
+    });
+    setRescheduleSuccess(true);
+    setTimeout(() => setRescheduleSuccess(false), 3000);
   };
 
   // Save Event scores & status
@@ -351,9 +379,43 @@ const AdminPage = () => {
                 <p className="current-event-desc">
                   <strong>Description:</strong> {currentEvent.description}
                 </p>
-                <div className="current-event-meta">
+                <div className="current-event-meta mb-3">
                   <span><strong>Max Points:</strong> {currentEvent.pointsAvailable}</span>
-                  <span><strong>Date:</strong> {currentEvent.date} {currentEvent.time}</span>
+                </div>
+
+                <div className="event-reschedule-panel form-group glass-card" style={{ padding: '0.85rem', marginBottom: '1rem', background: 'rgba(255,255,255,0.4)', borderRadius: '8px' }}>
+                  <label className="form-label" style={{ fontSize: '0.85rem', color: 'var(--color-primary-deep)', marginBottom: '0.5rem' }}>
+                    Reschedule Event
+                  </label>
+                  <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
+                      <input 
+                        type="date" 
+                        className="form-input" 
+                        value={editEventDate} 
+                        onChange={(e) => setEditEventDate(e.target.value)} 
+                        style={{ padding: '0.4rem', fontSize: '0.85rem' }}
+                      />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <input 
+                        type="time" 
+                        className="form-input" 
+                        value={editEventTime} 
+                        onChange={(e) => setEditEventTime(e.target.value)} 
+                        style={{ padding: '0.4rem', fontSize: '0.85rem' }}
+                      />
+                    </div>
+                    <button 
+                      type="button" 
+                      className="btn btn-primary btn-sm" 
+                      onClick={handleRescheduleEvent}
+                      style={{ padding: '0.4rem 0.75rem', fontSize: '0.8rem', whiteSpace: 'nowrap', height: '100%' }}
+                    >
+                      Update
+                    </button>
+                  </div>
+                  {rescheduleSuccess && <div className="text-success text-xs mt-2" style={{ fontWeight: 600 }}>Schedule Updated!</div>}
                 </div>
 
                 {/* Status selector */}

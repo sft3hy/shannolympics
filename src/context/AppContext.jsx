@@ -222,31 +222,67 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // Reset to default data
-  const resetToDefault = () => {
-    setEvents(DEFAULT_EVENTS);
-    setActivity(DEFAULT_ACTIVITY);
-    localStorage.removeItem('shannolympics_events');
-    localStorage.removeItem('shannolympics_activity');
-    
-    // Attempt push to cloud if connected, otherwise fallback
-    const supabase = initSupabase();
-    if (supabase && isCloudConnected) {
-      supabase.from('shannolympics_state').upsert({
-        id: 1,
-        events: DEFAULT_EVENTS,
-        activity: DEFAULT_ACTIVITY,
-        updated_at: new Date().toISOString()
-      }).then(({ error }) => {
-        if (error) console.error('Cloud reset failed:', error);
+  // Update event details (date, time, etc)
+  const updateEventDetails = (eventId, updates) => {
+    setEvents(prev => {
+      const updated = prev.map(evt => {
+        if (evt.id === eventId) {
+          return { ...evt, ...updates };
+        }
+        return evt;
       });
-    }
+      
+      setTimeout(() => {
+        const evtName = updated.find(e => e.id === eventId)?.name || 'Event';
+        logActivity(`Updated schedule/details for: "${evtName}".`, updated);
+      }, 50);
+      
+      // Save locally immediately
+      localStorage.setItem('shannolympics_events', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  // Reset to default schedule (preserving scores of existing matching events)
+  const resetToDefault = () => {
+    setEvents(prev => {
+      const preservedEvents = DEFAULT_EVENTS.map(defaultEvt => {
+        const existing = prev.find(e => e.id === defaultEvt.id);
+        if (existing) {
+          return {
+            ...defaultEvt,
+            scores: existing.scores,
+            status: existing.status
+          };
+        }
+        return defaultEvt;
+      });
+      
+      // Attempt push to cloud if connected, otherwise fallback
+      const supabase = initSupabase();
+      if (supabase && isCloudConnected) {
+        supabase.from('shannolympics_state').upsert({
+          id: 1,
+          events: preservedEvents,
+          activity: DEFAULT_ACTIVITY,
+          updated_at: new Date().toISOString()
+        }).then(({ error }) => {
+          if (error) console.error('Cloud reset failed:', error);
+        });
+      }
+      
+      localStorage.setItem('shannolympics_events', JSON.stringify(preservedEvents));
+      return preservedEvents;
+    });
+
+    setActivity(DEFAULT_ACTIVITY);
+    localStorage.setItem('shannolympics_activity', JSON.stringify(DEFAULT_ACTIVITY));
     
     // Log resetting activity
     const initEntry = {
       id: `act-${Date.now()}`,
       timestamp: new Date().toISOString(),
-      message: 'Reset all application standings to default settings.'
+      message: 'Restored schedule to default settings. Scores preserved.'
     };
     setActivity([initEntry]);
   };
@@ -466,6 +502,7 @@ export const AppProvider = ({ children }) => {
       updateEventScores,
       addEvent,
       deleteEvent,
+      updateEventDetails,
       resetToDefault,
       resetScoresToZero,
       importState,
