@@ -1,0 +1,42 @@
+:root {
+  /* Color Palette - Beach & Sunset */
+  --color-primary-deep: #0369a1;    /* Ocean blue deep */
+  --color-primary: #0ea5e9;         /* Sky blue */
+  --color-primary-light: #e0f2fe;   /* Pale water blue */
+  --color-accent-sunset: #f97316;   /* Orange sunset */
+  --color-accent-amber: #f59e0b;    /* Warm golden yellow */
+  --color-accent-gold: #eab308;     /* Gold medal */
+  --color-accent-silver: #94a3b8;   /* Silver medal */
+  --color-accent-bronze: #b45309;   /* Bronze medal */
+
+  --color-bg-sand: #f2ebd9;          /* Sand-beige light */
+  --color-bg-sand-light: #fdfcf9;    /* Sand cream */
+  --color-bg-sand-dark: #e8ddc2;     /* Warm dark sand */
+
+  --color-text-dark: #0f172a;       /* Slate dark */
+  --color-text-muted: #475569;      /* Slate grey */
+  --color-text-light: #f8fafc;      /* Sky grey white */
+
+  /* Status Colors */
+  --color-success: #10b981;         /* Completed (Green) */
+  --color-warning: #f59e0b;         /* In Progress (Orange) */
+  --color-info: #0ea5e9;            /* Upcoming (Blue) */
+
+  /* Glassmorphism settings */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(30, 41, 59, 0.06);
+  --glass-shadow-hover: 0 16px 48px 0 rgba(30, 41, 59, 0.12);
+  
+  --glass-bg-dark: rgba(15, 23, 42, 0.85);
+  --glass-border-dark: rgba(255, 255, 255, 0.1);
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  /* Fonts */
+  --font-sans: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}

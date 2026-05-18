@@ -1,0 +1,298 @@
+.events-page {
+  padding-bottom: 5rem;
+}
+
+/* Controls Panel Styling */
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem !important;
+}
+
+/* Search Box */
+.search-box {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s;
+  color: var(--color-text-dark);
+}
+
+.search-input:focus {
+  background: #ffffff;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+}
+
+/* Filter Chips */
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  padding: 0.5rem 1.15rem;
+  border-radius: 9999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(15, 23, 42, 0.05);
+  border: 1px solid transparent;
+  color: var(--color-text-muted);
+  transition: all 0.2s ease;
+}
+
+.chip:hover {
+  background: rgba(15, 23, 42, 0.08);
+  color: var(--color-text-dark);
+}
+
+.chip.active {
+  background: var(--color-primary-deep);
+  color: white;
+  box-shadow: 0 4px 10px rgba(3, 105, 161, 0.2);
+}
+
+/* Custom Active states for specific filters */
+.chip-upcoming.active { background: var(--color-info); }
+.chip-progress.active { background: var(--color-warning); }
+.chip-completed.active { background: var(--color-success); }
+
+/* Events Grid */
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.no-events {
+  padding: 4rem 2rem !important;
+}
+
+.no-events-icon {
+  color: var(--color-primary-light);
+  margin-bottom: 1rem;
+}
+
+/* Event Card */
+.event-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.card-icon-container {
+  width: 44px;
+  height: 44px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.02);
+}
+
+.evt-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.text-sky { color: var(--color-primary); }
+.text-orange { color: var(--color-accent-sunset); }
+.text-amber { color: var(--color-accent-amber); }
+
+.card-labels {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+}
+
+.points-avail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-accent-sunset);
+  background: rgba(249, 115, 22, 0.08);
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+}
+
+.event-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-primary-deep);
+  margin-bottom: 0.5rem;
+}
+
+.event-description {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+  margin-bottom: 1rem;
+  flex-grow: 1; /* Pushes the schedule and scoreboard to the bottom */
+}
+
+.event-schedule-info {
+  display: flex;
+  gap: 1rem;
+  border-top: 1px dashed rgba(15, 23, 42, 0.08);
+  border-bottom: 1px dashed rgba(15, 23, 42, 0.08);
+  padding: 0.65rem 0;
+  margin-bottom: 1rem;
+}
+
+.sched-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+/* Scoreboard container inside cards */
+.scoreboard-container {
+  margin-top: auto;
+}
+
+.upcoming-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: rgba(15, 23, 42, 0.03);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 23, 42, 0.02);
+}
+
+.text-amber {
+  color: var(--color-accent-amber);
+}
+
+.event-scoreboard {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+}
+
+.scoreboard-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.scoreboard-ranks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.score-row-item {
+  display: flex;
+  align-items: center;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(15, 23, 42, 0.03);
+}
+
+.player-rank-num {
+  width: 20px;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.player-name-text {
+  flex-grow: 1;
+  color: var(--color-text-dark);
+}
+
+.player-score-pts {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  color: var(--color-primary-deep);
+}
+
+.pts-suffix {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.score-row-item.zero-score {
+  opacity: 0.5;
+}
+
+/* Custom Highlight colors inside card scoreboards */
+.score-row-item.gold {
+  background: #fef9c3;
+  color: #854d0e;
+  border-color: #fef08a;
+}
+.score-row-item.gold .player-score-pts { color: #854d0e; }
+
+.score-row-item.silver {
+  background: #f1f5f9;
+  color: #334155;
+  border-color: #e2e8f0;
+}
+.score-row-item.silver .player-score-pts { color: #334155; }
+
+.score-row-item.bronze {
+  background: #ffedd5;
+  color: #9a3412;
+  border-color: #fed7aa;
+}
+.score-row-item.bronze .player-score-pts { color: #9a3412; }
+
+/* Responsive grid adjustments */
+@media (max-width: 768px) {
+  .controls-panel {
+    flex-direction: column;
+  }
+}
+@media (max-width: 480px) {
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+}
