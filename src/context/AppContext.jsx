@@ -46,6 +46,10 @@ export const AppProvider = ({ children }) => {
             activity: DEFAULT_ACTIVITY
           });
           setIsCloudConnected(true);
+        } else if (error.code === 'PGRST125') {
+          // Table 'shannolympics_state' is not found (PGRST125 invalid path)
+          console.warn("Supabase Sync Notice: Table 'shannolympics_state' not found in public schema. Run the SQL Setup Query in Admin Panel to activate cloud sync.");
+          setIsCloudConnected(false);
         } else {
           console.error('Error fetching Supabase state:', error);
           setIsCloudConnected(false);
@@ -266,7 +270,10 @@ export const AppProvider = ({ children }) => {
             setIsCloudConnected(true);
             return { success: true };
           }
-          throw error;
+          // Wrap error and include status code
+          const err = new Error(error.message);
+          err.code = error.code;
+          throw err;
         } else if (data) {
           if (Array.isArray(data.events)) setEvents(data.events);
           if (Array.isArray(data.activity)) setActivity(data.activity);
@@ -274,12 +281,23 @@ export const AppProvider = ({ children }) => {
           return { success: true };
         }
       } catch (e) {
-        // Clear configurations on validation failure
-        localStorage.removeItem('shannolympics_supabase_url');
-        localStorage.removeItem('shannolympics_supabase_key');
-        setSupabaseConfig(getSupabaseConfig());
+        const isTableMissing = e.code === 'PGRST125' || (e.message && e.message.includes('shannolympics_state'));
+        
+        // If it is NOT just a missing table (e.g. invalid credentials or network error), clear credentials.
+        // For missing table, we KEEP credentials so they can easily hit "Link & Sync" again after running SQL.
+        if (!isTableMissing) {
+          localStorage.removeItem('shannolympics_supabase_url');
+          localStorage.removeItem('shannolympics_supabase_key');
+          setSupabaseConfig(getSupabaseConfig());
+        }
+        
         setIsCloudConnected(false);
-        return { success: false, error: e.message || 'Connection check failed. Verify table, URL and Anon Key.' };
+        return { 
+          success: false, 
+          error: isTableMissing 
+            ? "Table 'shannolympics_state' not found in your Supabase database. Please open the SQL Setup Query drawer below, copy the SQL, run it in your Supabase SQL Editor, and click 'Link & Sync' again!"
+            : (e.message || 'Connection check failed. Verify your Supabase URL and Publishable API Key.')
+        };
       } finally {
         setIsSyncing(false);
       }

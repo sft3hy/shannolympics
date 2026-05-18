@@ -176,7 +176,7 @@ const AdminPage = () => {
   const handleConnectCloud = async (e) => {
     e.preventDefault();
     if (!dbUrl.trim() || !dbKey.trim()) {
-      setCloudSyncError('Please enter both Supabase URL and Anon API key.');
+      setCloudSyncError('Please enter both Supabase URL and Publishable API key.');
       return;
     }
     setCloudSyncError('');
@@ -550,7 +550,7 @@ const AdminPage = () => {
                   </div>
                   
                   <div className="form-group">
-                    <label className="form-label" htmlFor="db-key">Supabase Anon API Key</label>
+                    <label className="form-label" htmlFor="db-key">Supabase Publishable Key</label>
                     <input 
                       type="password" 
                       id="db-key"
