@@ -30,13 +30,6 @@ const AdminPage = () => {
   // Event delete confirmation state
   const [deleteConfirmEventId, setDeleteConfirmEventId] = useState(null);
 
-  // Sync inputs with config changes
-  React.useEffect(() => {
-    if (supabaseConfig) {
-      setDbUrl(supabaseConfig.url || '');
-      setDbKey(supabaseConfig.key || '');
-    }
-  }, [supabaseConfig]);
 
   // Score editor states
   const [selectedEventId, setSelectedEventId] = useState(events[0]?.id || '');
